@@ -1,0 +1,5 @@
+cb, cp, do, EXPRESSION, id, INIT, modifier, ob, op, return, scolon, TYPE, while
+op, 5
+return, 5
+type, 3
+assign, 4

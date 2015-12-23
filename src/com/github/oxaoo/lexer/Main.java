@@ -1,5 +1,7 @@
 package com.github.oxaoo.lexer;
 
+import com.github.oxaoo.asmgen.AsmCodeGenerator;
+import com.github.oxaoo.asmgen.ICodeGenerator;
 import com.github.oxaoo.codegen.CCodeGen;
 import com.github.oxaoo.lexer.syntax.Grammar;
 import com.github.oxaoo.lexer.syntax.SyntaxAnalizer;
@@ -25,6 +27,7 @@ public class Main {
         startLexer(args);
         CSyntaxTreeNode root = startParser();
         startCodeGen(root);
+        startAssembly();
     }
 
     private static void startCodeGen(CSyntaxTreeNode root) {
@@ -33,11 +36,23 @@ public class Main {
         cg.convert(root);
     }
 
+    private static void startAssembly(/**parameters from code gen**/) {
+        System.out.println("*** Start assembly  ***");
+        try {
+            ICodeGenerator asm = new AsmCodeGenerator();
+            asm.generate("res/assembly.asm");
+        }
+        catch (Exception ex) {
+            System.err.println("Error due assembling");
+            ex.printStackTrace();
+        }
+    }
+
     private static CSyntaxTreeNode startParser() {
         System.out.println("*** Start parser ***");
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("res/code4.t"));
+            br = new BufferedReader(new FileReader("res/code3.t"));
 
             String line;
             List<Terminal> tokens = new ArrayList<>();
@@ -95,7 +110,7 @@ public class Main {
 
     public static void startLexer(String[] args) {
         System.out.println("*** Start lexer ***");
-        String filename = "res/code4.java";
+        String filename = "res/code3.java";
         if (args.length > 0)
             filename = args[0];
 

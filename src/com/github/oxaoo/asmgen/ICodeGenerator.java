@@ -8,5 +8,5 @@ public interface ICodeGenerator {
      * Generate result asm source code
      * @param filename - asm listing file
      */
-    void generate(String filename);
+    void generate(String filename) throws Exception;
 }

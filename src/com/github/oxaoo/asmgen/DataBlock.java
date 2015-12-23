@@ -26,6 +26,7 @@ public class DataBlock extends AbstractAsmBlock implements IAssembleable {
         dataList.forEach(data -> {
             code.append(data.assemble());
         });
+        code.append(ENDL);
         return code.toString();
     }
 

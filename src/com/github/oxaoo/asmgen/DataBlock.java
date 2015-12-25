@@ -2,6 +2,7 @@ package com.github.oxaoo.asmgen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 /**
  * Created by Никита on 23.12.2015.
@@ -16,8 +17,23 @@ public class DataBlock extends AbstractAsmBlock implements IAssembleable {
 
     public void addDataStructure(String name, String type, String val) {
         DataStructure data = new DataStructure(name, type, val);
-        dataList.add(data);
+        if(!checkExist(data))
+            dataList.add(data);
     }
+
+    public void addDataStructure(DataStructure dataStructure) {
+        if(!checkExist(dataStructure))
+            dataList.add(dataStructure);
+    }
+
+    private boolean checkExist(DataStructure ds) {
+        for( DataStructure dataStructure : dataList) {
+            if(dataStructure.equals(ds))
+                return true;
+        }
+        return false;
+    }
+
 
     @Override
     public String assemble() {
@@ -30,7 +46,7 @@ public class DataBlock extends AbstractAsmBlock implements IAssembleable {
         return code.toString();
     }
 
-    class DataStructure implements  IAssembleable{
+    static public class DataStructure implements  IAssembleable{
         private String type;
         private String name;
         private String value;
@@ -42,9 +58,19 @@ public class DataBlock extends AbstractAsmBlock implements IAssembleable {
         }
 
         @Override
-        public String assemble() {
-            return TAB+name+TAB+type+TAB+value;
+        public boolean equals(Object obj) {
+            if(obj instanceof DataStructure) {
+                DataStructure objectDs = (DataStructure) obj;
+                if(objectDs.name.equals(this.name) && objectDs.type.equals(this.type)) return true;
+            }
+            return false;
         }
+
+        @Override
+        public String assemble() {
+            return TAB+name+TAB+type+TAB+value+ENDL;
+        }
+
     }
 
 }

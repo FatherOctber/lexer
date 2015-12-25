@@ -24,7 +24,7 @@ public class CTetrad {
         this.operand2 = operand2;*/
         //String strId = String.valueOf(count);
         //count++;
-        this(opcode, operand1, operand2, String.valueOf(++count));
+        this(opcode, operand1, operand2, "#"+String.valueOf(++count));
     }
 
     public CTetrad(EOpcode opcode, CTetrad operand1, String result) {
@@ -94,6 +94,22 @@ public class CTetrad {
                 ", operand2='" + strOp2 + '\'' +
                 ", result='" + result + '\'' +
                 '}';
+    }
+
+    public EOpcode getOpcode() {
+        return opcode;
+    }
+
+    public CTetrad getOperand1() {
+        return operand1;
+    }
+
+    public CTetrad getOperand2() {
+        return operand2;
+    }
+
+    public Object getResult() {
+        return result;
     }
 }
 
